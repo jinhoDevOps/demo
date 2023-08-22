@@ -1,6 +1,7 @@
 package com.example.demo;
 
 import com.example.demo.repository.BookRepository;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,7 +31,7 @@ public class RestAPI {
         return bookRepository.findById(id)
                 .map(book -> {
                     book.setAuthor(toBook.getAuthor());
-                    book.setName(toBook.getName());
+                    book.setTitle(toBook.getTitle());
                     book.setPrice(toBook.getPrice());
                     bookRepository.save(book);
                     return "update success";
