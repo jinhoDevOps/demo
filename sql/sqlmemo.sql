@@ -1,4 +1,4 @@
-SELECT VERSION();
+-- SELECT VERSION();
 
 USE example;
 
