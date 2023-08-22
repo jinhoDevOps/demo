@@ -1,48 +1,50 @@
 package com.example.demo;
 
+import com.example.demo.repository.BookRepository;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 public class RestAPI {
 
-    private final List<Book> bookList = new ArrayList<>();
+    private final BookRepository bookRepository;
 
-    @RequestMapping(method = RequestMethod.GET,path="/books")
-    public List<Book> GetAll(){
-        return bookList;
+    public RestAPI(BookRepository bookRepository) {
+        this.bookRepository = bookRepository;
     }
-    @RequestMapping(method = RequestMethod.POST, path="/add")
-    public String Add(@RequestBody Book book){
-        bookList.add(book);
+
+    @GetMapping("/books")
+    public List<Book> getAll() {
+        return bookRepository.findAll();
+    }
+
+    @PostMapping("/add")
+    public String add(@RequestBody Book book) {
+        bookRepository.save(book);
         return "Add";
     }
-    @RequestMapping(method = RequestMethod.POST, path="/update/{id}")
-    public String Update(@RequestBody Book tobook, @PathVariable int id){
-        Book find_book = bookList.stream()
-                .filter(book -> book.getId() == id)
-                .findAny()
-                .orElse(null);
-        if(find_book!=null){
-            find_book.setAuthor(tobook.getAuthor());
-            find_book.setName(tobook.getName());
-            find_book.setPrice(tobook.getPrice());
-            return "update success";
-        }
-        return "not valid";
+
+    @PostMapping("/update/{id}")
+    public String update(@RequestBody Book toBook, @PathVariable int id) {
+        return bookRepository.findById(id)
+                .map(book -> {
+                    book.setAuthor(toBook.getAuthor());
+                    book.setName(toBook.getName());
+                    book.setPrice(toBook.getPrice());
+                    bookRepository.save(book);
+                    return "update success";
+                })
+                .orElse("not valid");
     }
-    @RequestMapping(method = RequestMethod.POST, path="/delete/{id}")
-    public String Delete(@PathVariable int id){
-        Book find_book = bookList.stream()
-                .filter(book -> book.getId() == id)
-                .findAny()
-                .orElse(null);
-        if(find_book!=null){
-            bookList.remove(find_book);
-            return "delete success";
-        }
-        return "Not valid";
+
+    @PostMapping("/delete/{id}")
+    public String delete(@PathVariable int id) {
+        return bookRepository.findById(id)
+                .map(book -> {
+                    bookRepository.delete(book);
+                    return "delete success";
+                })
+                .orElse("Not valid");
     }
 }
