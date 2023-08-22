@@ -61,7 +61,7 @@ spring.jpa.hibernate.ddl-auto=update
 1. MySQL 서버를 시작하고 `example` 스키마와 `books` 테이블을 생성합니다.
 2. 필요한 의존성이 포함된 상태에서 프로젝트를 클론 또는 다운로드합니다.
 3. `application.properties` 파일을 열고 MySQL 연결 정보를 업데이트합니다.
-4. 애플리케이션을 실행하고 웹 브라우저에서 `http://localhost:9090/`에 접속합니다.
+4. 애플리케이션을 실행하고 웹 브라우저에서 `http://localhost:8081/` 으로 접속합니다.
 
 
 이것이 프로젝트의 기본 개요입니다. 코드를 자세히 살펴보고 이해하는 데 필요한 추가 정보가 있으면 알려주세요!
