@@ -47,7 +47,7 @@ spring.jpa.hibernate.ddl-auto=update
 
 ## 기능
 
-이 애플리케이션은 다음과 같은 기본 CRUD 기능을 제공합니다.
+이 애플리케이션은 RESTful API를 사용하여 다음과 같은 기본 CRUD (생성, 읽기, 업데이트, 삭제) 기능을 제공합니다.
 
 - 책 목록 조회 (`GET /books`)
 - 책 추가 (`POST /add`)
